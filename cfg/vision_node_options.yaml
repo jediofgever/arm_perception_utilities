@@ -1,0 +1,27 @@
+write_dataset: false
+publish_segmented_pointcloud: true
+publish_corrected_pointcloud: true
+publish_segmented_pointcloud_from_pointnet: true
+publish_gt_labels: true
+save_ply_file_for_pointnet_inference: true
+pointcloud_dataset_base_path: "~/pcl_dataset/"
+image_data_base_path: "~/Desktop/data/"
+segmented_ply_filepath: "~/catkin_ws/src/PICK_PLACE_with_ROS_on_FANUC_ARM/inference/latest_segmented.pcd"
+inference_ply_filepath: "~/catkin_ws/src/PICK_PLACE_with_ROS_on_FANUC_ARM/inference/latest_raw.ply"
+camera_frame: "camera_link"
+pub_gt_label_box_array_topic_name: "/gt_labelbox_array"
+pub_segmented_cloud_from_maskrcnn_topic_name: "/segmented_cloud_from_maskrcnn_ros_frame_convention"
+pub_segmented_cloud_from_pointnet_topic_name: "/segmented_cloud_from_pointnet_ros_frame_convention"
+pub_corrected_cloud_topic_name: "/corrected_cloud_ros_frame_convention"
+sub_raw_cloud_topic_name: "/camera/depth/color/points"
+sub_segmented_image_topic_name: "/output/maskrcnn/segmented"
+sub_gt_label_box_array_topic_name: "/gt_labels"
+sub_rgb_raw_image_topic_name:  "/camera/color/image_raw"
+write_inference_image_path: "~/catkin_ws/src/PICK_PLACE_with_ROS_on_FANUC_ARM/inference/pic_for_inference.png"
+read_segmented_image_path: "~/catkin_ws/src/PICK_PLACE_with_ROS_on_FANUC_ARM/inference/masks.png"
+ 
+
+ 
+
+
+ 

@@ -1,0 +1,29 @@
+<launch>
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <!-- GDB Debug Option -->
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix"
+     value="gdb -x $(find panda_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
+
+ 
+
+  <rosparam file="$(find arm_perception_utilities)/cfg/vision_node_options.yaml" />   
+
+  <node pkg="nodelet" type="nodelet" name="standalone_nodelet" args="manager" output="screen"/>
+
+
+  <node name="vision_ros_node" pkg="arm_perception_utilities" type="vision_ros_node" respawn="false" launch-prefix="$(arg launch_prefix)" output="screen">
+  </node>
+
+      
+  <node name="state_visualization_ros_node" pkg="arm_perception_utilities" type="state_visualization_ros_node" respawn="false" launch-prefix="$(arg launch_prefix)" output="screen">
+  </node>
+
+  <!--
+
+  -->
+  
+</launch>

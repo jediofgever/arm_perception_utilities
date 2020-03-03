@@ -1,0 +1,15 @@
+number_of_fake_objects: 10
+
+#poses ; x,y,z,rx,ry,rz
+#position in meters, oriantation degrees
+home_pose: [0.645,0.350,0.200,180.0, 0.0, 30.0]
+fake_object_0_pose: [-0.645,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_1_pose: [0.545,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_2_pose: [0.300,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_3_pose: [0.545,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_4_pose: [0.645,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_5_pose: [-0.300,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_6_pose: [0.545,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_7_pose: [0.545,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_8_pose: [0.645,-0.350,0.200,180.0, 0.0,-30.0]
+fake_object_9_pose: [0.545,-0.350,0.200,180.0, 0.0,-30.0]

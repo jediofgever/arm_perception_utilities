@@ -1,0 +1,25 @@
+<launch>
+
+  <!-- By default, we are not in debug mode -->
+  <arg name="debug" default="false" />
+
+  <!-- GDB Debug Option -->
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix"
+     value="gdb -x $(find panda_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
+
+  <group ns="fake_objects">
+      <rosparam file="$(find arm_perception_utilities)/cfg/fake_objects.yaml" />   
+  </group> 
+
+
+  <node name="fake_pickplace_ros_node" pkg="arm_perception_utilities" type="fake_pickplace_ros_node" respawn="false" launch-prefix="$(arg launch_prefix)" output="screen">
+  </node>
+      
+  <node name="state_visualization_ros_node" pkg="arm_perception_utilities" type="state_visualization_ros_node" respawn="false" launch-prefix="$(arg launch_prefix)" output="screen">
+  </node>
+
+  
+  <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/>
+
+</launch>

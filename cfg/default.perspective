@@ -1,0 +1,62 @@
+{
+  "keys": {},
+  "groups": {
+    "pluginmanager": {
+      "keys": {
+        "running-plugins": {
+          "type": "repr",
+          "repr": "{u'user_interface_rqt_plugin/RQTGUIControlPlugin': [1]}"
+        }
+      },
+      "groups": {
+        "plugin__user_interface_rqt_plugin__RQTGUIControlPlugin__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget__RQTGUIControlPluginWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "True"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "None"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'NewPluginWidget'"
+                }
+              },
+              "groups": {}
+            }
+          }
+        }
+      }
+    },
+    "mainwindow": {
+      "keys": {
+        "geometry": {
+          "type": "repr(QByteArray.hex)",
+          "repr(QByteArray.hex)": "QtCore.QByteArray('01d9d0cb00020000000000430000001b0000029d0000043900000043000000390000029d0000043900000000000000000780')",
+          "pretty-print": "     C     9 C 9   9     "
+        },
+        "state": {
+          "type": "repr(QByteArray.hex)",
+          "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000fd00000001000000030000025b000003d5fc0100000003fb00000092007200710074005f006700750069005f0063006f006e00740072006f006c005f0070006c007500670069006e005f005f0052005100540047005500490043006f006e00740072006f006c0050006c007500670069006e005f005f0031005f005f0052005100540047005500490043006f006e00740072006f006c0050006c007500670069006e00570069006400670065007401000000000000025b000000f400fffffffb00000092007200710074005f006700750069005f0063006f006e00740072006f006c005f0070006c007500670069006e005f005f0052005100540047005500490043006f006e00740072006f006c0050006c007500670069006e005f005f0032005f005f0052005100540047005500490043006f006e00740072006f006c0050006c007500670069006e0057006900640067006500740100000649000000f40000000000000000fb00000026007200710074005f007200760069007a005f005f005200560069007a005f005f0031005f005f010000026a000004d300000000000000000000025b0000000000000004000000040000000800000008fc00000001000000030000000100000036004d0069006e0069006d0069007a006500640044006f0063006b00570069006400670065007400730054006f006f006c0062006100720000000000ffffffff0000000000000000')",
+          "pretty-print": "                  user_interface_rqt_plugin__RQTGUIControlPlugin__1__RQTGUIControlPluginWidget           user_interface_rqt_plugin__RQTGUIControlPlugin__2__RQTGUIControlPluginWidget          &rqt_rviz__RViz__1__                            6MinimizedDockWidgetsToolbar        "
+        }
+      },
+      "groups": {
+        "toolbar_areas": {
+          "keys": {
+            "MinimizedDockWidgetsToolbar": {
+              "type": "repr",
+              "repr": "8"
+            }
+          },
+          "groups": {}
+        }
+      }
+    }
+  }
+}
