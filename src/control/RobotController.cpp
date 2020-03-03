@@ -71,7 +71,7 @@ void RobotController::moveEndEffectortoGoalinCartesianSpace(
     std::vector<geometry_msgs::Pose> waypoints;
 
     // Push current pose and target pose to way points
-    waypoints.push_back(current_pose);
+    //waypoints.push_back(current_pose);
     waypoints.push_back(robot_tcp_goal_in_cartesian_space);
 
     // compute a cartesian(linear) line between current and target pose
@@ -127,7 +127,7 @@ void RobotController::moveEndEffectortoGoalinToolSpace(geometry_msgs::Pose robot
 
     // we will do a linear plan between current pose and given target pose, so push the current pose to waypoint vector
     std::vector<geometry_msgs::Pose> waypoints;
-    waypoints.push_back(move_group_ptr_->getCurrentPose().pose);
+    //waypoints.push_back(move_group_ptr_->getCurrentPose().pose);
 
     // Since we are moving along tool_link , the orintation of robot tcp shall not change
     robot_goal_in_base_link_msg.orientation = move_group_ptr_->getCurrentPose().pose.orientation;

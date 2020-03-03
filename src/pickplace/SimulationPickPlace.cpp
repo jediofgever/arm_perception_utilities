@@ -57,7 +57,7 @@ SimulationPickPlace::~SimulationPickPlace() {}
  */
 void SimulationPickPlace::processSimulationPickPlaceCallback(
     const visualization_msgs::MarkerArrayConstPtr &detected_obj_pose_arrows) {
-    std::vector<double> zeros = {0, 0, 0, 0, 0, 0};
+    std::vector<double> zeros = {0, 0.349066, 1.22173, 0, 0, 0};
     pick_placer_->goto_scanning_pose(move_group_ptr_, zeros);
     sleep(10.0);
     for (int i = 0; i < detected_obj_pose_arrows->markers.size(); i++) {
