@@ -20,9 +20,9 @@ SimulationPickPlace::SimulationPickPlace(/* args */) {
     pick_placer_ = new PickandPlacer();
 
     // Define where to place the objects
-    placing_pose.orientation = utils::EulertoQuaternion(180.0, 0.0, 30.0, kDEG2RAD);
-    placing_pose.position.x = 0.550;
-    placing_pose.position.y = 0.350;
+    placing_pose.orientation = utils::EulertoQuaternion(180.0, 0.0, 180.0, kDEG2RAD);
+    placing_pose.position.x = 0.450;
+    placing_pose.position.y = 0.300;
     placing_pose.position.z = 0.20;
     placing_poses_vector.push_back(placing_pose);
     placing_pose.position.x -= 0.15;

@@ -91,6 +91,9 @@ class PointCloudManager
     //corrected Cloud publisher
     ros::Publisher corrected_cloud_pub_;
 
+    // LISTEN TO TRANSFORM AND GET MATRIXES OF TRANSFORM
+    tf::StampedTransform camera_depth_optical_frame_to_base_link_transform;
+
    public:
     /**
      * @brief Construct a new Point Cloud Class object

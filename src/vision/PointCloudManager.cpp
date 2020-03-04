@@ -388,11 +388,19 @@ void PointCloudManager::minVolObjectBuilder(std::vector<pcl::PointCloud<pcl::Poi
         tf::pointMsgToTF(cross_end_point_in_camera_depth_optical_frame_msg,
                          cross_end_point_in_camera_depth_optical_frame_tf);
 
-        // LISTEN TO TRANSFORM AND GET MATRIXES OF TRANSFORM
-        tf::StampedTransform camera_depth_optical_frame_to_base_link_transform;
+
         // lookup transform (this should be cached, since it’s probably static)
-        listener_->lookupTransform("base_link", "camera_link", ros::Time(0.0f),
+
+
+        try {
+            //listener_->waitForTransform("base_link", "camera_link", ros::Time(0), ros::Duration(10.0) );
+            listener_->lookupTransform("base_link", "camera_link", ros::Time(0),
                                    camera_depth_optical_frame_to_base_link_transform);
+            } 
+        catch (tf::TransformException ex) {
+           // ROS_ERROR("%s",ex.what());
+            return;
+        }
 
         tf::Point start_point_in_base_link_tf, end_point_in_base_link_tf;
         tf::Point cross_start_point_in_base_link_tf, cross_end_point_in_base_link_tf;
