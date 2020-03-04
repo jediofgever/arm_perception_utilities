@@ -22,6 +22,9 @@ RobotController::RobotController(/* args */) {
         node_handle_ptr_->advertise<std_msgs::Float64>("Gripper_Finger2_position_controller/command", 1);
     finger3_command_pub_ =
         node_handle_ptr_->advertise<std_msgs::Float64>("Gripper_Finger3_position_controller/command", 1);
+
+    visual_tools_.reset(new moveit_visual_tools::MoveItVisualTools("base_link", "/moveit_visual_markers"));
+
 }
 
 /**
@@ -47,6 +50,9 @@ void RobotController::moveEndEffectortoGoalinJointSpace(
 
     // chechk wheter a sucessfull plan was found
     bool success = (move_group_ptr_->plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+
+    publishRobotTrajectory(move_group_ptr_, my_plan.trajectory_);
+
 
     // stream some info about this sucess state
     ROS_INFO_NAMED("Motion Plan for End-Effector %s", success ? "SUCCESSED" : "FAILED");
@@ -83,6 +89,9 @@ void RobotController::moveEndEffectortoGoalinCartesianSpace(
     // We dont actually plan, but we need to set the trajectory of plan to calculated cartesian path
     moveit::planning_interface::MoveGroupInterface::Plan myplan;
     myplan.trajectory_ = trajectory;
+
+    publishRobotTrajectory(move_group_ptr_, myplan.trajectory_);
+
 
     // Move the manipulator according to calculated cartesian(linear) path
     move_group_ptr_->execute(myplan);
@@ -146,6 +155,9 @@ void RobotController::moveEndEffectortoGoalinToolSpace(geometry_msgs::Pose robot
     moveit::planning_interface::MoveGroupInterface::Plan myplan;
     myplan.trajectory_ = trajectory;
 
+    publishRobotTrajectory(move_group_ptr_, myplan.trajectory_);
+
+
     // Move the manipulator according to calculated cartesian(linear) path
     move_group_ptr_->execute(myplan);
 }
@@ -167,6 +179,9 @@ void RobotController::moveJointstoTargetPositions(std::vector<double> robot_join
     // check if a valid plan was found for this joint targets
     bool success = (move_group_ptr_->plan(move_joint_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
     ROS_INFO_NAMED("Motion Plan for Joint %s", success ? "SUCCESSED" : "FAILED");
+
+    publishRobotTrajectory(move_group_ptr_, move_joint_plan.trajectory_);
+
 
     // Move the manipulator according to Updated Joint States
     bool result = (move_group_ptr_->execute(move_joint_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
@@ -222,4 +237,53 @@ void RobotController::stopRobotTrajectrory(moveit::planning_interface::MoveGroup
 void RobotController::pauseRobotTrajectrory(moveit::planning_interface::MoveGroupInterface *move_group_ptr_) {
     // Pauses current path executions , if any
     move_group_ptr_->stop();
+}
+
+/**
+ * @brief publishes the planned path of robot, and visualizes it in RVIZ
+ *
+ */
+void RobotController::publishRobotTrajectory(moveit::planning_interface::MoveGroupInterface *move_group_ptr_,
+                                             moveit_msgs::RobotTrajectory trajectory) {
+    // Whicj joint model group's trajectory you would like to visualize ? , in our case "manipulator"
+    joint_model_group = move_group_ptr_->getCurrentState()->getJointModelGroup("manipulator");
+
+    // Delete any marker publushed by visual_tools_
+    visual_tools_->deleteAllMarkers();
+
+    // Convert trejectory in joint states to EEF poses
+    robot_trajectory::RobotTrajectoryPtr robot_trajectory(
+        new robot_trajectory::RobotTrajectory(move_group_ptr_->getRobotModel(), joint_model_group->getName()));
+
+    // set the trajectory
+    robot_trajectory->setRobotTrajectoryMsg(*move_group_ptr_->getCurrentState(), trajectory);
+
+    // the path points will be pushed into Eigen container
+    EigenSTL::vector_Vector3d path;
+    // go through each way point of our trajectory
+    for (std::size_t i = 0; i < robot_trajectory->getWayPointCount(); ++i) {
+        // tip pose W.R.T its parent link
+        const Eigen::Isometry3d &tip_pose = robot_trajectory->getWayPoint(i).getGlobalLinkTransform("link_6");
+
+        // Error Check
+        if (tip_pose.translation().x() != tip_pose.translation().x()) {
+            ROS_INFO("NAN DETECTED AT TRAJECTORY POINT i=");
+            return;
+        }
+
+        // push this point into path , which krrps waypoints inside
+        path.push_back(tip_pose.translation());
+
+        // put a sphere on this way point
+        visual_tools_->publishSphere(tip_pose, rviz_visual_tools::BLUE, rviz_visual_tools::LARGE);
+    }
+
+    // radius of path
+    const double radius = 0.006;
+
+    // publish the path
+    visual_tools_->publishPath(path, rviz_visual_tools::RED, radius);
+
+    // trigger action for moveit_tools_ markers
+    visual_tools_->trigger();
 }

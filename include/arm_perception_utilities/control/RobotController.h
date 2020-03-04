@@ -14,6 +14,7 @@
 #include <moveit/robot_model_loader/robot_model_loader.h>
 #include <moveit_msgs/DisplayRobotState.h>
 #include <moveit_msgs/DisplayTrajectory.h>
+#include <moveit_visual_tools/moveit_visual_tools.h>
 
 #include <std_msgs/Float64.h>
 #include <tf/transform_listener.h>
@@ -30,6 +31,12 @@ class RobotController {
     ros::Publisher finger1_command_pub_;
     ros::Publisher finger2_command_pub_;
     ros::Publisher finger3_command_pub_;
+
+    // Used to publish Robot Trajetory , to visualized planned path in RVIZ
+    moveit_visual_tools::MoveItVisualToolsPtr visual_tools_;
+
+    // Joint Model Groups needed by visual_tools_
+    const robot_model::JointModelGroup *joint_model_group;
 
    public:
     /**
@@ -107,5 +114,13 @@ class RobotController {
      * @param move_group_ptr_
      */
     void pauseRobotTrajectrory(moveit::planning_interface::MoveGroupInterface *move_group_ptr_);
+
+
+    /**
+     * @brief publishes the planned path of robot, and visualizes it in RVIZ
+     *
+     */
+    void publishRobotTrajectory(moveit::planning_interface::MoveGroupInterface *move_group_ptr_,
+                                moveit_msgs::RobotTrajectory trajectory);
 };
 #endif
